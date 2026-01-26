@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sample Financial Health Report — Kredit Lab</title>
+<style>
+/* ============================================
+   SAMPLE REPORT TEMPLATE
+   Kredit Lab - Financial Health Report
+   ============================================ */
+
+:root, [data-theme="light"] {
+  --bg: #f8fafc;
+  --bg-card: #ffffff;
+  --border-card: rgba(226,232,240,1);
+  --accent: #14B8A6;
+  --accent-soft: rgba(20,184,166,0.08);
+  --danger: #dc2626;
+  --danger-soft: rgba(220,38,38,0.06);
+  --warn: #d97706;
+  --warn-soft: rgba(217,119,6,0.06);
+  --info: #2563eb;
+  --info-soft: rgba(37,99,235,0.06);
+  --text-main: #1e293b;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+  --positive: #059669;
+  --positive-soft: rgba(5,150,105,0.08);
+}
+
+[data-theme="dark"] {
+  --bg: #0f172a;
+  --bg-card: rgba(15,23,42,0.96);
+  --border-card: rgba(51,65,85,0.8);
+  --accent: #14B8A6;
+  --accent-soft: rgba(20,184,166,0.15);
+  --danger: #ef4444;
+  --danger-soft: rgba(248,113,113,0.15);
+  --warn: #f59e0b;
+  --warn-soft: rgba(245,158,11,0.15);
+  --info: #3b82f6;
+  --info-soft: rgba(59,130,246,0.15);
+  --text-main: #f1f5f9;
+  --text-secondary: #cbd5e1;
+  --text-muted: #64748b;
+  --positive: #22c55e;
+  --positive-soft: rgba(34,197,94,0.15);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text-main);
+  line-height: 1.6;
+  font-size: 14px;
+}
+
+/* Sample Banner */
+.sample-banner {
+  background: linear-gradient(90deg, #14B8A6, #0D9488);
+  color: white;
+  text-align: center;
+  padding: 14px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.sample-banner strong {
+  font-weight: 700;
+}
+
+/* Container */
+.page {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+/* Header */
+.header-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  border-radius: 16px;
+  padding: 32px;
+  margin-bottom: 24px;
+}
+
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.header-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  padding: 6px 14px;
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.header-title {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.header-subtitle {
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+.header-meta {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border-card);
+}
+
+.meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.meta-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.meta-value {
+  font-size: 14px;
+  color: var(--text-main);
+}
+
+.placeholder {
+  background: linear-gradient(90deg, var(--text-muted), var(--text-secondary), var(--text-muted));
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-family: monospace;
+  letter-spacing: 0.05em;
+}
+
+.redacted {
+  background: var(--text-muted);
+  color: var(--text-muted);
+  border-radius: 4px;
+  padding: 2px 8px;
+  font-family: monospace;
+  user-select: none;
+}
+
+/* Theme Toggle */
+.theme-toggle {
+  position: fixed;
+  top: 70px;
+  right: 24px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  color: var(--text-secondary);
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  z-index: 100;
+  transition: all 0.2s;
+}
+
+.theme-toggle:hover {
+  border-color: var(--accent);
+}
+
+/* Navigation */
+.nav-bar {
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 24px;
+}
+
+.nav-title {
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: var(--text-muted);
+}
+
+.nav-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.nav-link {
+  background: var(--accent-soft);
+  color: var(--accent);
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.nav-link:hover {
+  background: var(--accent);
+  color: white;
+}
+
+/* Sections */
+.section {
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  border-radius: 16px;
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 24px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.section-header:hover {
+  background: var(--accent-soft);
+}
+
+.section-icon {
+  font-size: 24px;
+}
+
+.section-title-block {
+  flex: 1;
+}
+
+.section-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.section-desc {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.section-arrow {
+  color: var(--text-muted);
+  transition: transform 0.2s;
+}
+
+.section.open .section-arrow {
+  transform: rotate(180deg);
+}
+
+.section-content {
+  display: none;
+  padding: 0 24px 24px;
+}
+
+.section.open .section-content {
+  display: block;
+}
+
+/* Tables */
+.table-wrapper {
+  overflow-x: auto;
+  margin: 16px 0;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+th, td {
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid var(--border-card);
+}
+
+th {
+  background: var(--accent-soft);
+  font-weight: 600;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--text-secondary);
+}
+
+.number {
+  text-align: right;
+  font-family: 'SF Mono', Monaco, monospace;
+}
+
+.positive { color: var(--positive); }
+.negative { color: var(--danger); }
+
+.section-row {
+  background: var(--info-soft);
+  font-weight: 600;
+}
+
+.total-row {
+  background: var(--positive-soft);
+  font-weight: 600;
+}
+
+/* Observation Boxes */
+.obs-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.obs-box {
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.obs-box.positive {
+  background: var(--positive-soft);
+  border: 1px solid rgba(5,150,105,0.2);
+}
+
+.obs-box.caution {
+  background: var(--warn-soft);
+  border: 1px solid rgba(217,119,6,0.2);
+}
+
+.obs-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  font-size: 14px;
+}
+
+.obs-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.obs-list li {
+  font-size: 13px;
+  color: var(--text-secondary);
+  padding-left: 20px;
+  position: relative;
+}
+
+.obs-list li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: var(--text-muted);
+}
+
+/* Key Observations Grid */
+.key-obs-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.key-obs-item {
+  background: var(--bg);
+  border: 1px solid var(--border-card);
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.key-obs-item h4 {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+
+.key-obs-item p {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* Severity Badges */
+.severity {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.severity.high {
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+
+.severity.medium {
+  background: var(--warn-soft);
+  color: var(--warn);
+}
+
+.severity.low {
+  background: var(--info-soft);
+  color: var(--info);
+}
+
+/* Recommendations */
+.reco-box {
+  background: var(--info-soft);
+  border: 1px solid rgba(37,99,235,0.2);
+  border-radius: 12px;
+  padding: 20px;
+  margin-top: 24px;
+}
+
+.reco-box ol {
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.reco-box li {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+/* Facility Box */
+.facility-box {
+  background: var(--accent-soft);
+  border: 1px solid rgba(20,184,166,0.3);
+  border-radius: 12px;
+  padding: 20px;
+  margin-top: 24px;
+}
+
+.facility-box p {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin: 8px 0;
+}
+
+.facility-box ul {
+  padding-left: 20px;
+  margin-top: 12px;
+}
+
+.facility-box li {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin: 6px 0;
+}
+
+/* Note Box */
+.note-box {
+  background: var(--bg);
+  border-left: 3px solid var(--accent);
+  padding: 16px;
+  border-radius: 0 8px 8px 0;
+  margin: 16px 0;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+/* Footer */
+.report-footer {
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  border-radius: 12px;
+  padding: 24px;
+  margin-top: 24px;
+  text-align: center;
+}
+
+.disclaimer {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border-card);
+}
+
+.copyright {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.copyright-sub {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .key-obs-grid {
+    grid-template-columns: 1fr;
+  }
+  .obs-grid {
+    grid-template-columns: 1fr;
+  }
+  .header-title {
+    font-size: 22px;
+  }
+  .theme-toggle {
+    top: auto;
+    bottom: 20px;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- Sample Banner -->
+<div class="sample-banner">
+  📋 <strong>SAMPLE TEMPLATE</strong> — This demonstrates the report structure. Your report will contain your actual company data and figures.
+</div>
+
+<!-- Theme Toggle -->
+<button class="theme-toggle" onclick="toggleTheme()">🌙 Dark Mode</button>
+
+<div class="page">
+
+  <!-- Header -->
+  <div class="header-card">
+    <div class="header-top">
+      <div>
+        <div class="header-pill">📊 Financial Health Report</div>
+        <h1 class="header-title">
+          <span>💼</span>
+          <span>[Your Company Name Sdn. Bhd.]</span>
+        </h1>
+        <p class="header-subtitle">Registration No. [XXXXXX-X]</p>
+      </div>
+    </div>
+    <div class="header-meta">
+      <div class="meta-item">
+        <span class="meta-label">Principal Activities</span>
+        <span class="meta-value">[Your business activities will appear here]</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Financial Year End</span>
+        <span class="meta-value">[Month]</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Analysis Period</span>
+        <span class="meta-value">[FY20XX] to [FY20XX]</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Prepared By</span>
+        <span class="meta-value">Kredit Lab</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navigation -->
+  <div class="nav-bar">
+    <div class="nav-title">📑 Quick Navigation</div>
+    <div class="nav-links">
+      <a href="#" class="nav-link">📋 Notes</a>
+      <a href="#" class="nav-link">📈 P&L</a>
+      <a href="#" class="nav-link">📊 Balance Sheet</a>
+      <a href="#" class="nav-link">🧮 Ratios</a>
+      <a href="#" class="nav-link">💰 Working Capital</a>
+      <a href="#" class="nav-link">🏗️ Funding</a>
+      <a href="#" class="nav-link">🎯 Profile</a>
+      <a href="#" class="nav-link">📐 DSCR</a>
+      <a href="#" class="nav-link">🏦 TNW</a>
+      <a href="#" class="nav-link">🧭 Summary</a>
+    </div>
+  </div>
+
+  <!-- Section: Key Observations (Open by default) -->
+  <div class="section open">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-icon">🧭</span>
+      <div class="section-title-block">
+        <div class="section-title">Summary & Key Observations</div>
+        <div class="section-desc">Analysis highlights, concerns, and strategic recommendations</div>
+      </div>
+      <span class="section-arrow">▼</span>
+    </div>
+    <div class="section-content">
+      
+      <!-- Key Observations Grid -->
+      <div class="key-obs-grid">
+        <div class="key-obs-item">
+          <h4>Revenue Trend</h4>
+          <p>Analysis of your revenue over [X] years, including growth rates, concentration risks, and seasonal patterns.</p>
+        </div>
+        <div class="key-obs-item">
+          <h4>Profitability</h4>
+          <p>Gross margin, net margin, and EBITDA trends. Comparison against industry benchmarks.</p>
+        </div>
+        <div class="key-obs-item">
+          <h4>Liquidity Position</h4>
+          <p>Current ratio, quick ratio, and cash position assessment against banking covenants.</p>
+        </div>
+        <div class="key-obs-item">
+          <h4>Working Capital Cycle</h4>
+          <p>Cash Conversion Cycle (CCC) analysis — debtor days, creditor days, and working capital requirement.</p>
+        </div>
+        <div class="key-obs-item">
+          <h4>Debt Structure</h4>
+          <p>Breakdown of term vs revolving facilities, secured vs unsecured, and maturity profile.</p>
+        </div>
+        <div class="key-obs-item">
+          <h4>Funding Position</h4>
+          <p>Long-term funding adequacy, funding gap analysis, and asset-liability matching.</p>
+        </div>
+        <div class="key-obs-item">
+          <h4>Asset Base</h4>
+          <p>Total assets composition, PPE breakdown, receivables quality, and related party exposures.</p>
+        </div>
+        <div class="key-obs-item">
+          <h4>Related Party</h4>
+          <p>Amounts due from/to directors, subsidiaries, and related companies.</p>
+        </div>
+        <div class="key-obs-item">
+          <h4>Dividend Policy</h4>
+          <p>Historical dividend patterns and retained earnings position.</p>
+        </div>
+      </div>
+
+      <!-- Positive / Caution Grid -->
+      <div class="obs-grid">
+        <div class="obs-box positive">
+          <div class="obs-title">
+            <span>✅</span>
+            <span>Positive Indicators</span>
+          </div>
+          <ul class="obs-list">
+            <li><strong>[Strength 1]:</strong> Description of positive finding from your financials</li>
+            <li><strong>[Strength 2]:</strong> Another area where your company performs well</li>
+            <li><strong>[Strength 3]:</strong> Banking-relevant positive indicator</li>
+            <li><strong>[Strength 4]:</strong> Trend or metric that supports creditworthiness</li>
+          </ul>
+        </div>
+        <div class="obs-box caution">
+          <div class="obs-title">
+            <span>⚠️</span>
+            <span>Areas Requiring Attention</span>
+          </div>
+          <ul class="obs-list">
+            <li><strong>[Concern 1]:</strong> Issue identified with severity rating <span class="severity high">HIGH</span></li>
+            <li><strong>[Concern 2]:</strong> Area to monitor <span class="severity medium">MEDIUM</span></li>
+            <li><strong>[Concern 3]:</strong> Minor flag <span class="severity low">LOW</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Recommendations -->
+      <div class="reco-box">
+        <div class="obs-title">
+          <span>🎯</span>
+          <span>Strategic Recommendations</span>
+        </div>
+        <ol>
+          <li><strong>[Priority: HIGH]</strong> First recommended action based on findings</li>
+          <li><strong>[Priority: HIGH]</strong> Second critical action item</li>
+          <li><strong>[Priority: MEDIUM]</strong> Important but not urgent action</li>
+          <li><strong>[Priority: LOW]</strong> Longer-term consideration</li>
+        </ol>
+      </div>
+
+      <!-- Facility Guidance -->
+      <div class="facility-box">
+        <div class="obs-title">
+          <span>🏦</span>
+          <span>Facility Suitability Summary</span>
+        </div>
+        <p><strong>Existing Facilities Appropriate:</strong> [Assessment]</p>
+        <p><strong>Facilities to Consider:</strong> [Recommendations based on your situation]</p>
+        <p><strong>Facilities to Avoid:</strong> [What doesn't fit your profile]</p>
+        <p><strong>Key Conditions:</strong></p>
+        <ul>
+          <li>DSCR covenant — current status vs benchmark</li>
+          <li>Current ratio — position vs banking requirements</li>
+          <li>Gearing — headroom assessment</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Section: P&L -->
+  <div class="section open">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-icon">📈</span>
+      <div class="section-title-block">
+        <div class="section-title">Profit & Loss Statement</div>
+        <div class="section-desc">Revenue, costs, and profitability analysis</div>
+      </div>
+      <span class="section-arrow">▼</span>
+    </div>
+    <div class="section-content">
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Item</th>
+              <th class="number">[FY1]</th>
+              <th class="number">[FY2]</th>
+              <th class="number">[FY3]</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="section-row">
+              <td colspan="4">REVENUE</td>
+            </tr>
+            <tr>
+              <td>Revenue</td>
+              <td class="number placeholder">RM X,XXX,XXX</td>
+              <td class="number placeholder">RM X,XXX,XXX</td>
+              <td class="number placeholder">RM X,XXX,XXX</td>
+            </tr>
+            <tr class="section-row">
+              <td colspan="4">COST OF SALES</td>
+            </tr>
+            <tr>
+              <td>Cost of Sales</td>
+              <td class="number placeholder">(RM X,XXX,XXX)</td>
+              <td class="number placeholder">(RM X,XXX,XXX)</td>
+              <td class="number placeholder">(RM X,XXX,XXX)</td>
+            </tr>
+            <tr class="total-row">
+              <td><strong>Gross Profit</strong></td>
+              <td class="number placeholder"><strong>RM X,XXX,XXX</strong></td>
+              <td class="number placeholder"><strong>RM X,XXX,XXX</strong></td>
+              <td class="number placeholder"><strong>RM X,XXX,XXX</strong></td>
+            </tr>
+            <tr>
+              <td>Gross Margin %</td>
+              <td class="number placeholder">XX.X%</td>
+              <td class="number placeholder">XX.X%</td>
+              <td class="number placeholder">XX.X%</td>
+            </tr>
+            <tr class="section-row">
+              <td colspan="4">OPERATING EXPENSES</td>
+            </tr>
+            <tr>
+              <td>Administrative Expenses</td>
+              <td class="number placeholder">(RM XXX,XXX)</td>
+              <td class="number placeholder">(RM XXX,XXX)</td>
+              <td class="number placeholder">(RM XXX,XXX)</td>
+            </tr>
+            <tr>
+              <td>Finance Costs</td>
+              <td class="number placeholder">(RM XXX,XXX)</td>
+              <td class="number placeholder">(RM XXX,XXX)</td>
+              <td class="number placeholder">(RM XXX,XXX)</td>
+            </tr>
+            <tr class="total-row">
+              <td><strong>Net Profit / (Loss)</strong></td>
+              <td class="number placeholder"><strong>RM X,XXX,XXX</strong></td>
+              <td class="number placeholder"><strong>RM X,XXX,XXX</strong></td>
+              <td class="number placeholder"><strong>RM X,XXX,XXX</strong></td>
+            </tr>
+            <tr>
+              <td>Net Margin %</td>
+              <td class="number placeholder">XX.X%</td>
+              <td class="number placeholder">XX.X%</td>
+              <td class="number placeholder">XX.X%</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="note-box">
+        <strong>Analysis:</strong> Commentary on your P&L trends, margin movements, and key drivers will appear here.
+      </div>
+    </div>
+  </div>
+
+  <!-- Section: Balance Sheet -->
+  <div class="section">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-icon">📊</span>
+      <div class="section-title-block">
+        <div class="section-title">Balance Sheet</div>
+        <div class="section-desc">Assets, liabilities, and equity position</div>
+      </div>
+      <span class="section-arrow">▼</span>
+    </div>
+    <div class="section-content">
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Item</th>
+              <th class="number">[FY1]</th>
+              <th class="number">[FY2]</th>
+              <th class="number">[FY3]</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="section-row">
+              <td colspan="4">NON-CURRENT ASSETS</td>
+            </tr>
+            <tr>
+              <td>Property, Plant & Equipment</td>
+              <td class="number placeholder">RM X,XXX,XXX</td>
+              <td class="number placeholder">RM X,XXX,XXX</td>
+              <td class="number placeholder">RM X,XXX,XXX</td>
+            </tr>
+            <tr class="section-row">
+              <td colspan="4">CURRENT ASSETS</td>
+            </tr>
+            <tr>
+              <td>Trade Receivables</td>
+              <td class="number placeholder">RM X,XXX,XXX</td>
+              <td class="number placeholder">RM X,XXX,XXX</td>
+              <td class="number placeholder">RM X,XXX,XXX</td>
+            </tr>
+            <tr>
+              <td>Cash & Bank</td>
+              <td class="number placeholder">RM X,XXX,XXX</td>
+              <td class="number placeholder">RM X,XXX,XXX</td>
+              <td class="number placeholder">RM X,XXX,XXX</td>
+            </tr>
+            <tr class="total-row">
+              <td><strong>Total Assets</strong></td>
+              <td class="number placeholder"><strong>RM XX,XXX,XXX</strong></td>
+              <td class="number placeholder"><strong>RM XX,XXX,XXX</strong></td>
+              <td class="number placeholder"><strong>RM XX,XXX,XXX</strong></td>
+            </tr>
+            <tr class="section-row">
+              <td colspan="4">EQUITY & LIABILITIES</td>
+            </tr>
+            <tr>
+              <td>Share Capital</td>
+              <td class="number placeholder">RM X,XXX,XXX</td>
+              <td class="number placeholder">RM X,XXX,XXX</td>
+              <td class="number placeholder">RM X,XXX,XXX</td>
+            </tr>
+            <tr>
+              <td>Retained Earnings</td>
+              <td class="number placeholder">RM X,XXX,XXX</td>
+              <td class="number placeholder">RM X,XXX,XXX</td>
+              <td class="number placeholder">RM X,XXX,XXX</td>
+            </tr>
+            <tr>
+              <td>Bank Borrowings</td>
+              <td class="number placeholder">RM X,XXX,XXX</td>
+              <td class="number placeholder">RM X,XXX,XXX</td>
+              <td class="number placeholder">RM X,XXX,XXX</td>
+            </tr>
+            <tr>
+              <td>Trade Payables</td>
+              <td class="number placeholder">RM X,XXX,XXX</td>
+              <td class="number placeholder">RM X,XXX,XXX</td>
+              <td class="number placeholder">RM X,XXX,XXX</td>
+            </tr>
+            <tr class="total-row">
+              <td><strong>Total Equity & Liabilities</strong></td>
+              <td class="number placeholder"><strong>RM XX,XXX,XXX</strong></td>
+              <td class="number placeholder"><strong>RM XX,XXX,XXX</strong></td>
+              <td class="number placeholder"><strong>RM XX,XXX,XXX</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section: Key Ratios -->
+  <div class="section">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-icon">🧮</span>
+      <div class="section-title-block">
+        <div class="section-title">Key Financial Ratios</div>
+        <div class="section-desc">Liquidity, gearing, and profitability metrics</div>
+      </div>
+      <span class="section-arrow">▼</span>
+    </div>
+    <div class="section-content">
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Ratio</th>
+              <th class="number">[FY1]</th>
+              <th class="number">[FY2]</th>
+              <th class="number">[FY3]</th>
+              <th class="number">Benchmark</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="section-row">
+              <td colspan="5">LIQUIDITY</td>
+            </tr>
+            <tr>
+              <td>Current Ratio</td>
+              <td class="number placeholder">X.XX x</td>
+              <td class="number placeholder">X.XX x</td>
+              <td class="number placeholder">X.XX x</td>
+              <td class="number">≥ 1.25x</td>
+            </tr>
+            <tr>
+              <td>Quick Ratio</td>
+              <td class="number placeholder">X.XX x</td>
+              <td class="number placeholder">X.XX x</td>
+              <td class="number placeholder">X.XX x</td>
+              <td class="number">≥ 1.00x</td>
+            </tr>
+            <tr class="section-row">
+              <td colspan="5">GEARING</td>
+            </tr>
+            <tr>
+              <td>Debt-to-Equity</td>
+              <td class="number placeholder">X.XX x</td>
+              <td class="number placeholder">X.XX x</td>
+              <td class="number placeholder">X.XX x</td>
+              <td class="number">≤ 2.00x</td>
+            </tr>
+            <tr>
+              <td>Gearing Ratio</td>
+              <td class="number placeholder">X.XX x</td>
+              <td class="number placeholder">X.XX x</td>
+              <td class="number placeholder">X.XX x</td>
+              <td class="number">≤ 4.00x</td>
+            </tr>
+            <tr class="section-row">
+              <td colspan="5">EFFICIENCY</td>
+            </tr>
+            <tr>
+              <td>Debtor Days</td>
+              <td class="number placeholder">XX days</td>
+              <td class="number placeholder">XX days</td>
+              <td class="number placeholder">XX days</td>
+              <td class="number">≤ 90 days</td>
+            </tr>
+            <tr>
+              <td>Creditor Days</td>
+              <td class="number placeholder">XX days</td>
+              <td class="number placeholder">XX days</td>
+              <td class="number placeholder">XX days</td>
+              <td class="number">—</td>
+            </tr>
+            <tr>
+              <td>Cash Conversion Cycle</td>
+              <td class="number placeholder">XX days</td>
+              <td class="number placeholder">XX days</td>
+              <td class="number placeholder">XX days</td>
+              <td class="number">—</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section: DSCR -->
+  <div class="section">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-icon">📐</span>
+      <div class="section-title-block">
+        <div class="section-title">DSCR Analysis</div>
+        <div class="section-desc">Debt Service Coverage Ratio — can you service your debt?</div>
+      </div>
+      <span class="section-arrow">▼</span>
+    </div>
+    <div class="section-content">
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Component</th>
+              <th class="number">[FY1]</th>
+              <th class="number">[FY2]</th>
+              <th class="number">[FY3]</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>EBITDA</td>
+              <td class="number placeholder">RM X,XXX,XXX</td>
+              <td class="number placeholder">RM X,XXX,XXX</td>
+              <td class="number placeholder">RM X,XXX,XXX</td>
+            </tr>
+            <tr>
+              <td>Principal Repayment</td>
+              <td class="number placeholder">RM X,XXX,XXX</td>
+              <td class="number placeholder">RM X,XXX,XXX</td>
+              <td class="number placeholder">RM X,XXX,XXX</td>
+            </tr>
+            <tr>
+              <td>Interest Expense</td>
+              <td class="number placeholder">RM XXX,XXX</td>
+              <td class="number placeholder">RM XXX,XXX</td>
+              <td class="number placeholder">RM XXX,XXX</td>
+            </tr>
+            <tr class="total-row">
+              <td><strong>DSCR</strong></td>
+              <td class="number placeholder"><strong>X.XX x</strong></td>
+              <td class="number placeholder"><strong>X.XX x</strong></td>
+              <td class="number placeholder"><strong>X.XX x</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="note-box">
+        <strong>Benchmark:</strong> DSCR ≥ 1.25x (Banking Standard). This ratio tells banks whether your cash flow can cover debt repayments.
+      </div>
+    </div>
+  </div>
+
+  <!-- Section: TNW -->
+  <div class="section">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-icon">🏦</span>
+      <div class="section-title-block">
+        <div class="section-title">Tangible Net Worth (TNW)</div>
+        <div class="section-desc">Banking perspective — your adjusted equity position</div>
+      </div>
+      <span class="section-arrow">▼</span>
+    </div>
+    <div class="section-content">
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Component</th>
+              <th class="number">[FY1]</th>
+              <th class="number">[FY2]</th>
+              <th class="number">[FY3]</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Total Shareholders' Equity</td>
+              <td class="number placeholder">RM X,XXX,XXX</td>
+              <td class="number placeholder">RM X,XXX,XXX</td>
+              <td class="number placeholder">RM X,XXX,XXX</td>
+            </tr>
+            <tr>
+              <td>Less: Intangible Assets</td>
+              <td class="number placeholder">(RM XXX,XXX)</td>
+              <td class="number placeholder">(RM XXX,XXX)</td>
+              <td class="number placeholder">(RM XXX,XXX)</td>
+            </tr>
+            <tr>
+              <td>Less: Due from Directors</td>
+              <td class="number placeholder">(RM XXX,XXX)</td>
+              <td class="number placeholder">(RM XXX,XXX)</td>
+              <td class="number placeholder">(RM XXX,XXX)</td>
+            </tr>
+            <tr>
+              <td>Less: Due from Related Parties</td>
+              <td class="number placeholder">(RM XXX,XXX)</td>
+              <td class="number placeholder">(RM XXX,XXX)</td>
+              <td class="number placeholder">(RM XXX,XXX)</td>
+            </tr>
+            <tr class="total-row">
+              <td><strong>Adjusted TNW</strong></td>
+              <td class="number placeholder"><strong>RM X,XXX,XXX</strong></td>
+              <td class="number placeholder"><strong>RM X,XXX,XXX</strong></td>
+              <td class="number placeholder"><strong>RM X,XXX,XXX</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="note-box">
+        <strong>Why TNW matters:</strong> Banks adjust your equity by removing intangibles and related party balances to see your "real" net worth.
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="report-footer">
+    <div class="disclaimer">
+      <strong>Disclaimer:</strong> This is a sample template showing the structure of Kredit Lab's Financial Health Report. 
+      Your actual report will contain real analysis based on your company's financial statements.
+    </div>
+    <div class="copyright">
+      © 2026 Kredit Lab. All rights reserved.
+      <div class="copyright-sub">Kredit Lab is a division of Capital Island Sdn. Bhd.</div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function toggleSection(header) {
+  const section = header.parentElement;
+  section.classList.toggle('open');
+}
+
+function toggleTheme() {
+  const html = document.documentElement;
+  const current = html.getAttribute('data-theme');
+  const next = current === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  
+  const btn = document.querySelector('.theme-toggle');
+  btn.textContent = next === 'dark' ? '☀️ Light Mode' : '🌙 Dark Mode';
+}
+</script>
+
+</body>
+</html>
