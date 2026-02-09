@@ -112,18 +112,18 @@
             color: var(--text-primary);
         }
 
-        /* ✅ Logo size */
+        /* Logo sizing */
         .logo img {
             height: 48px;   /* change to 56px if you want bigger */
             width: auto;
             display: block;
         }
 
-        /* ✅ Show correct logo for each theme */
+        /* Theme-based logo switching */
         [data-theme="light"] .logo img.logo-dark { display: none; }
         [data-theme="light"] .logo img.logo-light { display: block; }
-        [data-theme="dark"] .logo img.logo-dark { display: block; }
-        [data-theme="dark"] .logo img.logo-light { display: none; }
+        [data-theme="dark"]  .logo img.logo-dark { display: block; }
+        [data-theme="dark"]  .logo img.logo-light { display: none; }
 
         .nav-links {
             display: flex;
@@ -666,12 +666,6 @@
             text-align: center;
         }
 
-        .footer-brand {
-            font-weight: 600;
-            font-size: 16px;
-            margin-bottom: 8px;
-        }
-
         .footer-tagline {
             color: var(--text-muted);
             font-size: 13px;
@@ -682,6 +676,16 @@
             color: var(--text-muted);
             font-size: 12px;
         }
+
+        /* Theme-based footer logo switching */
+        footer img.logo-dark { display: none; }
+        footer img.logo-light { display: none; }
+
+        [data-theme="dark"] footer img.logo-dark { display: inline-block; }
+        [data-theme="dark"] footer img.logo-light { display: none; }
+
+        [data-theme="light"] footer img.logo-dark { display: none; }
+        [data-theme="light"] footer img.logo-light { display: inline-block; }
 
         /* ========== PHASE BADGE ========== */
         .phase-badge {
@@ -703,34 +707,17 @@
 
         /* ========== RESPONSIVE ========== */
         @media (max-width: 900px) {
-            .problem-grid {
-                grid-template-columns: 1fr;
-                gap: 40px;
-            }
-            .steps-grid {
-                grid-template-columns: 1fr;
-            }
-            .inside-grid {
-                grid-template-columns: 1fr;
-            }
-            .usecases {
-                grid-template-columns: 1fr;
-            }
-            .nav-links {
-                display: none;
-            }
+            .problem-grid { grid-template-columns: 1fr; gap: 40px; }
+            .steps-grid { grid-template-columns: 1fr; }
+            .inside-grid { grid-template-columns: 1fr; }
+            .usecases { grid-template-columns: 1fr; }
+            .nav-links { display: none; }
         }
 
         @media (max-width: 600px) {
-            .hero h1 {
-                font-size: 32px;
-            }
-            .cta-price {
-                font-size: 40px;
-            }
-            .cta-box {
-                padding: 40px 24px;
-            }
+            .hero h1 { font-size: 32px; }
+            .cta-price { font-size: 40px; }
+            .cta-box { padding: 40px 24px; }
         }
     </style>
 </head>
@@ -739,10 +726,9 @@
     <nav>
         <div class="nav-inner">
             <a href="#" class="logo">
-                <!-- ✅ Use PNG in repo root -->
-                <img src="KreditLab.png" alt="Kredit Lab" class="logo-dark">
-                <!-- If you later create a separate light-mode logo, put it here -->
-                <!-- <img src="KreditLab-light.png" alt="Kredit Lab" class="logo-light"> -->
+                <!-- ✅ EXACT filenames from your repo -->
+                <img src="./KreditLab-dark.png" alt="Kredit Lab" class="logo-dark">
+                <img src="./KreditLab-light.png" alt="Kredit Lab" class="logo-light">
             </a>
             <div class="nav-links">
                 <a href="#problem">Why This Matters</a>
@@ -940,7 +926,6 @@
                 This is exactly what RM500 buys you — a comprehensive financial analysis that shows you the truth about your business.
             </p>
             
-            <!-- Report Preview Container -->
             <div class="report-preview">
                 <div class="preview-window">
                     <div class="preview-header">
@@ -963,7 +948,6 @@
                 </div>
             </div>
             
-            <!-- Key highlights -->
             <div class="preview-highlights">
                 <div class="highlight-item">
                     <div class="highlight-icon">📊</div>
@@ -1055,8 +1039,9 @@
     <!-- FOOTER -->
     <footer>
         <div class="container">
-            <!-- ✅ Use PNG in repo root -->
-            <img src="KreditLab.png" alt="Kredit Lab" style="height: 40px; margin-bottom: 16px; opacity: 0.9;">
+            <!-- ✅ EXACT filenames from your repo -->
+            <img src="./KreditLab-dark.png" alt="Kredit Lab" class="logo-dark" style="height: 40px; margin-bottom: 16px; opacity: 0.9;">
+            <img src="./KreditLab-light.png" alt="Kredit Lab" class="logo-light" style="height: 40px; margin-bottom: 16px; opacity: 0.9;">
             <div class="footer-tagline">Clarity Before Capital</div>
             <div class="footer-legal">
                 A division of Capital Island Sdn Bhd<br>
