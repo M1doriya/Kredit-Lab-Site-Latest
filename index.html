@@ -112,26 +112,18 @@
             color: var(--text-primary);
         }
 
-        /* ✅ Logo size fix (was small before) */
+        /* ✅ Logo size */
         .logo img {
-            height: 48px;   /* try 48px; change to 56px if you want bigger */
+            height: 48px;   /* change to 56px if you want bigger */
             width: auto;
             display: block;
         }
 
-        /* For light mode, we may need to invert or use alternate logo */
-        [data-theme="light"] .logo img.logo-dark {
-            display: none;
-        }
-        [data-theme="light"] .logo img.logo-light {
-            display: block;
-        }
-        [data-theme="dark"] .logo img.logo-dark {
-            display: block;
-        }
-        [data-theme="dark"] .logo img.logo-light {
-            display: none;
-        }
+        /* ✅ Show correct logo for each theme */
+        [data-theme="light"] .logo img.logo-dark { display: none; }
+        [data-theme="light"] .logo img.logo-light { display: block; }
+        [data-theme="dark"] .logo img.logo-dark { display: block; }
+        [data-theme="dark"] .logo img.logo-light { display: none; }
 
         .nav-links {
             display: flex;
