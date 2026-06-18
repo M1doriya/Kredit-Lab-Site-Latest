@@ -171,6 +171,54 @@
         }
         .hero-content { max-width: 720px; }
 
+        .report-types {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px;
+            margin: 36px 0 40px;
+        }
+        .report-type-card {
+            background: var(--dark-card);
+            border: 1px solid var(--dark-border);
+            border-radius: 16px;
+            padding: 22px;
+            position: relative;
+            overflow: hidden;
+        }
+        .report-type-card.featured {
+            border-color: rgba(20, 184, 166, 0.45);
+            box-shadow: 0 18px 45px rgba(20, 184, 166, 0.12);
+        }
+        .report-type-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(20, 184, 166, 0.12), transparent 45%);
+            pointer-events: none;
+        }
+        .report-type-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--teal);
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 12px;
+        }
+        .report-type-card h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            position: relative;
+        }
+        .report-type-card p {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.65;
+            position: relative;
+        }
+
         .hero-badge {
             display: inline-flex;
             align-items: center;
@@ -722,6 +770,7 @@
             .preview-highlights { grid-template-columns: 1fr; }
             .nav-links { display: none; }
             .prepare-grid { grid-template-columns: repeat(2, 1fr); }
+            .report-types { grid-template-columns: 1fr; }
         }
         @media (max-width: 600px) {
             .hero h1 { font-size: 32px; }
@@ -775,8 +824,21 @@
 
                 <p class="hero-sub">
                     Banks don't explain rejections. Brokers push products. And you're left guessing what went wrong.
-                    <strong>The Financial Health Report</strong> and our new <strong>Bank Statement Report</strong> show you exactly how banks see your business — before you ever sit across from one.
+                    <strong>Kredit Lab gives you two bank-ready lenses:</strong> a Financial Health Report for your statements and a Bank Statement Report for the cashflow story inside your transactions.
                 </p>
+
+                <div class="report-types" aria-label="Available Kredit Lab reports">
+                    <div class="report-type-card">
+                        <div class="report-type-eyebrow">📊 Statement View</div>
+                        <h3>Financial Health Report</h3>
+                        <p>Ratios, margins, debt capacity, funding gaps, and bank-style risk flags from your financial statements.</p>
+                    </div>
+                    <div class="report-type-card featured">
+                        <div class="report-type-eyebrow">🏦 Cashflow View</div>
+                        <h3>Bank Statement Report</h3>
+                        <p>Transaction patterns, cash inflows and outflows, bounced payments, statutory payment gaps, and account behaviour red flags.</p>
+                    </div>
+                </div>
 
                 <div class="hero-ctas">
                     <a href="https://wa.me/60164414739?text=Hi%2C%20I%27d%20like%20to%20get%20a%20Kredit%20Lab%20report." class="btn btn-primary">Get Your Report →</a>
@@ -843,17 +905,17 @@
                 <div class="step-card">
                     <span class="step-num">1</span>
                     <h3>Send Your Documents</h3>
-                    <p>2-3 years of financial statements. Audited is ideal, but management accounts work too. That's all we need.</p>
+                    <p>Send your financial statements for a Financial Health Report, bank statements for a Bank Statement Report, or both for the full view.</p>
                 </div>
                 <div class="step-card">
                     <span class="step-num">2</span>
                     <h3>We Analyse</h3>
-                    <p>Built from real banking frameworks — ratios, coverage, funding structure, risk flags. Not theory. The actual logic institutions use.</p>
+                    <p>Built from real banking frameworks — ratios, coverage, funding structure, cashflow behaviour, transaction patterns, and risk flags.</p>
                 </div>
                 <div class="step-card">
                     <span class="step-num">3</span>
                     <h3>Get Your Report</h3>
-                    <p>An interactive report with clear findings, severity flags, and prioritised recommendations. Delivered within 1 working day.</p>
+                    <p>An interactive Financial Health Report, Bank Statement Report, or combined review with clear findings and prioritised recommendations.</p>
                 </div>
             </div>
 
@@ -863,11 +925,11 @@
                 <div class="prepare-grid">
                     <div class="prepare-item">
                         <strong>Financial Statements</strong>
-                        <span>2-3 years (audited preferred, management accounts accepted)</span>
+                        <span>2-3 years for the Financial Health Report (audited preferred, management accounts accepted)</span>
                     </div>
                     <div class="prepare-item">
-                        <strong>Format</strong>
-                        <span>PDF, scanned copies, or Excel — whatever you have</span>
+                        <strong>Bank Statements</strong>
+                        <span>Recent monthly statements for the Bank Statement Report, ideally in PDF or Excel</span>
                     </div>
                     <div class="prepare-item">
                         <strong>Payment</strong>
@@ -890,7 +952,7 @@
             <h2 class="section-title">The banker's view — decoded.</h2>
 
             <p style="color: var(--text-secondary); max-width: 600px;">
-                Everything a credit officer would analyse, explained in a way that actually helps you make decisions. Covers up to 3 financial years.
+                Everything a credit officer would analyse, explained in a way that actually helps you make decisions — from financial statements to bank statement cashflow behaviour.
             </p>
 
             <div class="inside-grid">
@@ -976,7 +1038,7 @@
                 </div>
                 <div class="usecase">
                     <h4>Just want clarity</h4>
-                    <p>Understand your financial health without the sales pitch.</p>
+                    <p>Understand your financial health and bank account behaviour without the sales pitch.</p>
                 </div>
             </div>
         </div>
@@ -1253,9 +1315,9 @@
                 <div class="cta-price">From RM500</div>
                 <div class="cta-subtitle">Pricing confirmed before you pay • Delivered within 1 working day</div>
 
-                <h2>Get Your Financial Health Report</h2>
+                <h2>Get Your Financial Health or Bank Statement Report</h2>
 
-                <p>Send us your financial statements. We'll send you back the truth about your business — the same analysis a bank would do, explained in a way that actually helps you.</p>
+                <p>Send us your financial statements, bank statements, or both. We'll send you back the truth about your business — the same analysis a bank would do, explained in a way that actually helps you.</p>
 
                 <div class="cta-buttons">
                     <a href="https://wa.me/60164414739?text=Hi%2C%20I%27d%20like%20to%20get%20a%20Kredit%20Lab%20report." class="btn btn-primary">WhatsApp Us →</a>
